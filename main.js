@@ -26,7 +26,7 @@ function classifyVideo() {
         if (error) console.error("Fatal error " + error);
 
         result_input = select("#result");
-        result_input.elt.value = (result[0].label === "mask") ? "LLEVAS MASCARILLA" + result[0].confidence : "NO LLEVAS MASCARILLA" + result[0].confidence;
+        result_input.elt.value = result[0].label + " : " + result[0].confidence;
         classifyVideo();
     });
 }
