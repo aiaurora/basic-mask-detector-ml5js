@@ -1,9 +1,6 @@
 let video;
-
 let classifier;
 let model = "./mask_model/"
-
-let result_input;
 
 function preload() {
     classifier = ml5.imageClassifier(model + "model.json");
@@ -22,11 +19,13 @@ function draw() {
 }
 
 function classifyVideo() {
-    classifier.classify(video, (error, result) => {
-        if (error) console.error("Fatal error " + error);
-
-        result_input = select("#result");
-        result_input.elt.value = result[0].label + " : " + result[0].confidence;
-        classifyVideo();
+    classifier.classify(video).then((results) => {
+        showOnDOM(results);
     });
+}
+
+function showOnDOM(results) {
+    let result_input = select("#result");
+    result_input.elt.value = results[0].label + " : " + results[0].confidence;
+    classifyVideo();
 }
